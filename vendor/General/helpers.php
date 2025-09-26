@@ -7,7 +7,7 @@ function dd($var) {
     die;
 }
 
-function view(string $filename, array $data) {
+function view(string $filename, array $data = []) {
     extract($data);
     require __DIR__.'/../../Views/'.$filename;
 }

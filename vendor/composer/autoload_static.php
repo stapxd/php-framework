@@ -16,6 +16,10 @@ class ComposerStaticInitf89d44fd1798cb52b8ddee90cc28e5f7
             'Vendor\\Foundation\\' => 18,
             'Vendor\\App\\' => 11,
         ),
+        'M' => 
+        array (
+            'Models\\' => 7,
+        ),
         'C' => 
         array (
             'Controllers\\' => 12,
@@ -30,6 +34,10 @@ class ComposerStaticInitf89d44fd1798cb52b8ddee90cc28e5f7
         'Vendor\\App\\' => 
         array (
             0 => __DIR__ . '/..' . '/App',
+        ),
+        'Models\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/Models',
         ),
         'Controllers\\' => 
         array (

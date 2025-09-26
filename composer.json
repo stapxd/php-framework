@@ -3,7 +3,8 @@
         "psr-4": {
             "Vendor\\Foundation\\": "vendor/Foundation/",
             "Vendor\\App\\": "vendor/App/",
-            "Controllers\\": "Controllers/"
+            "Controllers\\": "Controllers/",
+            "Models\\": "Models/"
         },
         "files": [
             "vendor/General/helpers.php"
