@@ -1,0 +1,12 @@
+{
+    "autoload": {
+        "psr-4": {
+            "Vendor\\Foundation\\": "vendor/Foundation/",
+            "Vendor\\App\\": "vendor/App/",
+            "Controllers\\": "Controllers/"
+        },
+        "files": [
+            "vendor/General/helpers.php"
+        ]
+    }
+}
