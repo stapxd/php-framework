@@ -7,7 +7,15 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Vendor\\Foundation\\' => array($vendorDir . '/Foundation'),
+    'Vendor\\Database\\' => array($vendorDir . '/Database'),
+    'Vendor\\Auth\\' => array($vendorDir . '/Auth'),
     'Vendor\\App\\' => array($vendorDir . '/App'),
+    'Symfony\\Polyfill\\Php80\\' => array($vendorDir . '/symfony/polyfill-php80'),
+    'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
+    'Symfony\\Polyfill\\Ctype\\' => array($vendorDir . '/symfony/polyfill-ctype'),
+    'PhpOption\\' => array($vendorDir . '/phpoption/phpoption/src/PhpOption'),
     'Models\\' => array($baseDir . '/Models'),
+    'GrahamCampbell\\ResultType\\' => array($vendorDir . '/graham-campbell/result-type/src'),
+    'Dotenv\\' => array($vendorDir . '/vlucas/phpdotenv/src'),
     'Controllers\\' => array($baseDir . '/Controllers'),
 );
