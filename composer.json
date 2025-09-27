@@ -3,11 +3,16 @@
         "psr-4": {
             "Vendor\\Foundation\\": "vendor/Foundation/",
             "Vendor\\App\\": "vendor/App/",
+            "Vendor\\Database\\": "vendor/Database",
+            "Vendor\\Auth\\": "vendor/Auth",
             "Controllers\\": "Controllers/",
             "Models\\": "Models/"
         },
         "files": [
             "vendor/General/helpers.php"
         ]
+    },
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
     }
 }
