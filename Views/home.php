@@ -11,5 +11,12 @@
     <h1>Home</h1>
 
     <button id="btn-1">Click me</button>
+
+    <?php
+    
+    var_dump($products);
+
+    ?>
+
 </body>
 </html>

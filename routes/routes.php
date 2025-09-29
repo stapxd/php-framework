@@ -2,6 +2,10 @@
 
 /** @var Application $app */
 
-$app->router()->get('/', function(){
-    return view('home.php');
-});
+use Controllers\HomeController;
+
+// $app->router()->get('/', function(){
+//     return view('home.php');
+// });
+
+$app->router()->get('/', [HomeController::class, 'index']);

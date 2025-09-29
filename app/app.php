@@ -2,5 +2,5 @@
 
 use Vendor\App\Application;
 
-return Application::configure()
+return Application::instance()
     ->withDatabase(env('DB_CONNECTION', ''));
