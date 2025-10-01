@@ -3,8 +3,9 @@
         "psr-4": {
             "Vendor\\Foundation\\": "vendor/Foundation/",
             "Vendor\\App\\": "vendor/App/",
-            "Vendor\\Database\\": "vendor/Database",
-            "Vendor\\Auth\\": "vendor/Auth",
+            "Vendor\\Database\\": "vendor/Database/",
+            "Vendor\\Auth\\": "vendor/Auth/",
+            "Vendor\\Facades\\": "vendor/Facades/",
             "Controllers\\": "Controllers/",
             "Models\\": "Models/"
         },

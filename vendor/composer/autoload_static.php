@@ -17,6 +17,7 @@ class ComposerStaticInitf89d44fd1798cb52b8ddee90cc28e5f7
         'V' => 
         array (
             'Vendor\\Foundation\\' => 18,
+            'Vendor\\Facades\\' => 15,
             'Vendor\\Database\\' => 16,
             'Vendor\\Auth\\' => 12,
             'Vendor\\App\\' => 11,
@@ -53,6 +54,10 @@ class ComposerStaticInitf89d44fd1798cb52b8ddee90cc28e5f7
         'Vendor\\Foundation\\' => 
         array (
             0 => __DIR__ . '/..' . '/Foundation',
+        ),
+        'Vendor\\Facades\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/Facades',
         ),
         'Vendor\\Database\\' => 
         array (

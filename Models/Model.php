@@ -2,6 +2,6 @@
 
 namespace Models;
 
-class Model {
-    
+abstract class Model {
+    abstract static function getAll();
 }
