@@ -5,20 +5,17 @@ namespace Vendor\App;
 use Exception;
 
 use Vendor\Database\DatabaseFactory;
+use Vendor\Facades\DB;
+use Vendor\Facades\Router as RouterFacade;
 use Vendor\Foundation\Router;
 
 class Application {
     private static ?Application $instance = null;
 
-    private Router $router;
     private array $services;
-
-    public function __construct() {
-        $this->router = new Router();
-    }
-
-    public function router(): Router { 
-        return $this->router;
+    
+    private function __construct() {
+        $this->register(RouterFacade::getFacadeAccessor(), new Router());
     }
 
     public function resolve(string $serviceName) {
@@ -35,13 +32,13 @@ class Application {
     }
 
     public function handleRequest(string $path) {
-        $this->router->execute($path);
+        RouterFacade::execute($path);
     }
 
     public function withDatabase(string $dbConnection) {
         if(!$dbConnection) throw new Exception('.env file does not have DB_CONNECTION!');
 
-        $this->register('db', DatabaseFactory::createDatabase($dbConnection));
+        $this->register(DB::getFacadeAccessor(), DatabaseFactory::createDatabase($dbConnection));
         return self::$instance;
     }
 

@@ -1,11 +1,10 @@
 <?php
 
-/** @var Application $app */
-
 use Controllers\HomeController;
+use Vendor\Facades\Router;
 
-// $app->router()->get('/', function(){
+// Router::get('/', function(){
 //     return view('home.php');
 // });
 
-$app->router()->get('/', [HomeController::class, 'index']);
+Router::get('/', [HomeController::class, 'index']);
