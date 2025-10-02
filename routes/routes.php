@@ -8,3 +8,5 @@ use Vendor\Facades\Router;
 // });
 
 Router::get('/', [HomeController::class, 'index']);
+
+Router::post('/create', [HomeController::class, 'create']);

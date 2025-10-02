@@ -3,6 +3,7 @@
 namespace Vendor\Facades;
 
 use Vendor\App\Application;
+use Vendor\Foundation\Request;
 
 class Router extends Facade {
     
@@ -18,10 +19,10 @@ class Router extends Facade {
         return $router->post($path, $callback);
     }
 
-    static function execute(string $path) { 
+    static function execute(Request $request) { 
         $router = Application::instance()->resolve(self::getFacadeAccessor());
         
-        return $router->execute($path);
+        return $router->execute($request);
     }
 
     static function getFacadeAccessor(): string{

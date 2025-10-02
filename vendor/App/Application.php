@@ -2,20 +2,59 @@
 
 namespace Vendor\App;
 
+use Closure;
 use Exception;
 
 use Vendor\Database\DatabaseFactory;
 use Vendor\Facades\DB;
 use Vendor\Facades\Router as RouterFacade;
+use Vendor\Foundation\Request;
 use Vendor\Foundation\Router;
 
 class Application {
     private static ?Application $instance = null;
 
     private array $services;
+    private array $bindings;
     
     private function __construct() {
         $this->register(RouterFacade::getFacadeAccessor(), new Router());
+
+        // вынести в отдельный файл AppServiceProvider, например:
+        $this->bind(Request::class, fn() => Request::capture(), true);
+    }
+
+    public function bind(string $abstract, $concrete, $shared = false) {
+        $this->bindings[$abstract] = [
+            'concrete' => $concrete,
+            'shared'   => $shared
+        ];
+    }
+
+    public function make(string $abstract) {
+        if(isset($this->services[$abstract]))
+            return $this->services[$abstract];
+
+        if(!isset($this->bindings[$abstract])) throw new Exception("Application::make : class $abstract was not bound");
+
+        $concrete = $this->bindings[$abstract]['concrete'];
+        $shared = $this->bindings[$abstract]['shared'];
+
+        if ($concrete instanceof \Closure) {
+            $object = $concrete($this);
+        } elseif (is_object($concrete)) {
+            $object = $concrete;
+        } elseif (is_string($concrete) && class_exists($concrete)) {
+            $object = new $concrete();
+        } else {
+            throw new Exception("Cannot instantiate service: $abstract");
+        }
+        
+        if($shared) {
+            $this->register($abstract, $object);
+        }
+        
+        return $object;
     }
 
     public function resolve(string $serviceName) {
@@ -31,8 +70,8 @@ class Application {
         $this->services[$serviceName] = $service;
     }
 
-    public function handleRequest(string $path) {
-        RouterFacade::execute($path);
+    public function handleRequest(Request $request) {
+        RouterFacade::execute($request);
     }
 
     public function withDatabase(string $dbConnection) {
