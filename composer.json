@@ -6,6 +6,7 @@
             "Vendor\\Database\\": "vendor/Database/",
             "Vendor\\Auth\\": "vendor/Auth/",
             "Vendor\\Facades\\": "vendor/Facades/",
+            "Vendor\\General\\": "vendor/General/",
             "Controllers\\": "Controllers/",
             "Models\\": "Models/"
         },

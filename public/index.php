@@ -1,5 +1,7 @@
 <?php
 
+use Vendor\Foundation\Request;
+
 require __DIR__.'/../vendor/autoload.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/..');
@@ -11,4 +13,4 @@ require __DIR__.'/../app/Services/register.php';
 
 require __DIR__.'/../routes/routes.php';
 
-$app->handleRequest($_SERVER['REQUEST_URI']);
+$app->handleRequest(Request::capture());

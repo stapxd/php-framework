@@ -1,5 +1,7 @@
 <?php
 
+use Vendor\App\Application;
+
 function dd($var) {
     echo '<pre>';
     var_dump($var);
@@ -25,4 +27,18 @@ function env($key, $default = null) {
         'null'  => null,
         default  => $value
     };
+}
+
+function app($className = null) {
+
+    if(!$className) {
+        return Application::instance();
+    }
+
+    return app()->make($className);
+}
+
+function redirect(string $url) {
+    header("Location: $url");
+    exit;
 }
