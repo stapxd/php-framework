@@ -2,7 +2,12 @@
 
 namespace Vendor\Database;
 
+use Exception;
+use mysqli;
+use Vendor\Database\Schema\SchemaMySQL;
+
 class DatabaseMySQL extends Database {
+    protected $connection = null;
 
     public function __construct() {
         $this->connect();
@@ -10,12 +15,38 @@ class DatabaseMySQL extends Database {
 
     public function connect()
     {
-        
+        $this->connection = new mysqli(env('DB_HOST'), 
+            env('DB_USERNAME'),
+            env('DB_PASSWORD'),
+            env('DB_DATABASE'),
+            env('DB_PORT'));
+
+        return $this->connection;
     }
 
-    public function query(string $sql) : array
+    public function isConnected() {
+        return $this->connection;
+    }
+
+    public function getSchema() {
+        return new SchemaMySQL();
+    }
+
+    public function query(string $sql)
     {
-        echo "This is mysql query! $sql";
-        return [];
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+        
+        return $this->connection->query($sql);
+    }
+
+    public function dropIfExists(string $tableName)
+    {
+        $result = $this->connection->query("DROP TABLE IF EXISTS $tableName");
+        return $result;
+    }
+
+    public function isTableExists(string $tableName)
+    {
+        return mysqli_fetch_column($this->connection->query("SHOW TABLES LIKE 'migrations'")) != '' ? true : false;
     }
 }
