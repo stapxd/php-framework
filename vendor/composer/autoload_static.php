@@ -19,6 +19,7 @@ class ComposerStaticInitf89d44fd1798cb52b8ddee90cc28e5f7
             'Vendor\\General\\' => 15,
             'Vendor\\Foundation\\' => 18,
             'Vendor\\Facades\\' => 15,
+            'Vendor\\Database\\Schema\\' => 23,
             'Vendor\\Database\\' => 16,
             'Vendor\\Auth\\' => 12,
             'Vendor\\App\\' => 11,
@@ -36,6 +37,7 @@ class ComposerStaticInitf89d44fd1798cb52b8ddee90cc28e5f7
         'M' => 
         array (
             'Models\\' => 7,
+            'Migration\\' => 10,
         ),
         'G' => 
         array (
@@ -63,6 +65,10 @@ class ComposerStaticInitf89d44fd1798cb52b8ddee90cc28e5f7
         'Vendor\\Facades\\' => 
         array (
             0 => __DIR__ . '/..' . '/Facades',
+        ),
+        'Vendor\\Database\\Schema\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/Database/Schema',
         ),
         'Vendor\\Database\\' => 
         array (
@@ -95,6 +101,10 @@ class ComposerStaticInitf89d44fd1798cb52b8ddee90cc28e5f7
         'Models\\' => 
         array (
             0 => __DIR__ . '/../..' . '/Models',
+        ),
+        'Migration\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/migrations',
         ),
         'GrahamCampbell\\ResultType\\' => 
         array (

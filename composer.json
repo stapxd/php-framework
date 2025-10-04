@@ -4,9 +4,11 @@
             "Vendor\\Foundation\\": "vendor/Foundation/",
             "Vendor\\App\\": "vendor/App/",
             "Vendor\\Database\\": "vendor/Database/",
+            "Vendor\\Database\\Schema\\": "vendor/Database/Schema/",
             "Vendor\\Auth\\": "vendor/Auth/",
             "Vendor\\Facades\\": "vendor/Facades/",
             "Vendor\\General\\": "vendor/General/",
+            "Migration\\": "migrations/",
             "Controllers\\": "Controllers/",
             "Models\\": "Models/"
         },

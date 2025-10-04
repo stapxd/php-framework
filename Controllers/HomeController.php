@@ -2,16 +2,66 @@
 
 namespace Controllers;
 
+use Migration\Migration;
 use Models\HomeModel;
+use Vendor\Facades\DB;
+use Vendor\Facades\Schema;
 use Vendor\Foundation\Request;
 
 class HomeController extends Controller {
     public function index(Request $request) {
-        $products = HomeModel::getAll();
-        $data = [
-            'products' => $products,
-        ];
-        return view('home.php', $data);
+
+        if(DB::isConnected()) {
+            echo 'Connected';
+        
+            // Schema::create('products', function($table) {
+            //     $table->id();
+            //     $table->int('quantity', false, false, true);
+            //     $table->int('code', false, true);
+            //     $table->string('title', 100, false);
+            //     $table->text('description');
+            //     $table->double('price', 10, 2, false);
+            // });
+
+            //Schema::dropIfExists('migrations');
+Schema::dropIfExists('products');
+            //DB::query('DROP TABLE IF EXISTS users');
+
+            // DB::query('CREATE TABLE IF NOT EXISTS Users (
+            //     ID INT PRIMARY KEY AUTO_INCREMENT,
+
+            // )');
+
+            // CREATE TABLE $table_name ()
+
+
+
+            /*
+            $query = 'CREATE TABLE $table_name (';
+            id() {
+                $this->query += 'id INT PRIMARY KEY AUTO_INCREMENT';
+            }
+
+            string($name) {
+                $this->query += ', $name VARCHAR(255)';
+            }
+
+
+            $rows = DB::query(SELECT * FROM users); // <- fetch_assoc()
+            DB::drop('table_name');
+
+            //in Model: $fillable = ['col1', 'col2'];
+            //как сделать миграции типа ларавеля
+            DB::createTable('table_name', [
+                'id' -> 'INT PRIMARY KEY'
+            ]);
+            */
+
+        }
+        else {
+            echo 'Error connection';
+        }
+
     }
 
     public function create(int $id, string $title) {
