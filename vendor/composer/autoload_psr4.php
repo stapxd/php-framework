@@ -10,6 +10,7 @@ return array(
     'Vendor\\Foundation\\' => array($vendorDir . '/Foundation'),
     'Vendor\\Facades\\' => array($vendorDir . '/Facades'),
     'Vendor\\Database\\Schema\\' => array($vendorDir . '/Database/Schema'),
+    'Vendor\\Database\\Builders\\' => array($vendorDir . '/Database/Builders'),
     'Vendor\\Database\\' => array($vendorDir . '/Database'),
     'Vendor\\Auth\\' => array($vendorDir . '/Auth'),
     'Vendor\\App\\' => array($vendorDir . '/App'),
@@ -22,4 +23,5 @@ return array(
     'GrahamCampbell\\ResultType\\' => array($vendorDir . '/graham-campbell/result-type/src'),
     'Dotenv\\' => array($vendorDir . '/vlucas/phpdotenv/src'),
     'Controllers\\' => array($baseDir . '/Controllers'),
+    'App\\Providers\\' => array($baseDir . '/app/Providers'),
 );

@@ -11,6 +11,7 @@
     <h1>Home</h1>
 
     <button id="btn-1">Click me</button>
+    <a href="/login">Login</a>
 
     <form action="/create" method="POST">
         <input type="text" name="id">

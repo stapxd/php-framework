@@ -29,7 +29,12 @@ class DB extends Facade {
         $db = static::getInstance();
         $schema = $db->getSchema();
         return $schema;
-    }    
+    }
+
+    public static function table(string $tableName) {
+        $db = static::getInstance();
+        return $db->table($tableName);
+    } 
 
     public static function getFacadeAccessor(): string {
         return 'db';

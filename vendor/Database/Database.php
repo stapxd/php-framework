@@ -2,6 +2,8 @@
 
 namespace Vendor\Database;
 
+use Vendor\Database\Builders\Builder;
+
 abstract class Database {
     protected $connection;
 
@@ -13,4 +15,5 @@ abstract class Database {
     abstract function isTableExists(string $tableName);
 
     abstract function getSchema();
+    abstract function table(string $tableName) : Builders\Builder;
 }
