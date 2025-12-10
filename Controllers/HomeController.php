@@ -12,6 +12,13 @@ use Vendor\Facades\Auth;
 class HomeController extends Controller {
     public function index(Request $request) {
 
+        $user = Auth::currentUser();
+
+        $data = [
+            'user' => $user,
+        ];
+        return view('home.php', $data);
+
         if(DB::isConnected()) {
             //echo 'Connected';
         
@@ -25,7 +32,7 @@ class HomeController extends Controller {
             // });
 
             //Schema::dropIfExists('migrations');
-//Schema::dropIfExists('products');
+            //Schema::dropIfExists('products');
             //DB::query('DROP TABLE IF EXISTS users');
 
             // DB::query('CREATE TABLE IF NOT EXISTS Users (
@@ -57,8 +64,7 @@ class HomeController extends Controller {
                 'id' -> 'INT PRIMARY KEY'
             ]);
             */
-
-            return view('home.php');
+            
         }
         else {
             echo 'Error connection';
@@ -75,12 +81,32 @@ class HomeController extends Controller {
         return view('login.php');
     }
 
-    public function loginPost(Request $request, string $email, string $password){
-        Auth::login([
-            'email' => $email,
-            'password' => $password
-        ]);
+    public function register(){
+        return view('register.php');
+    }
 
-        dd(Auth::currentUser());
+    public function registerPost(string $email, string $password){
+        $result = HomeModel::registerUser($email, $password);
+
+        if($result === false){
+            echo "Error registration user.";
+        }
+        
+        redirect('/');
+    }
+
+    public function loginPost(string $email, string $password){
+        $result = HomeModel::loginUser($email, $password);
+
+        if($result === false){
+            echo "Error login user.";
+        }
+        
+        redirect('/');
+    }
+
+    public function logoutPost(){
+        Auth::logout();
+        redirect('/');
     }
 }

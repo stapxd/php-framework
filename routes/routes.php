@@ -12,5 +12,9 @@ Router::get('/', [HomeController::class, 'index']);
 Router::post('/create', [HomeController::class, 'create']);
 
 Router::get('/login', [HomeController::class, 'login']);
-
 Router::post('/login', [HomeController::class, 'loginPost']);
+
+Router::get('/register', [HomeController::class, 'register']);
+Router::post('/register', [HomeController::class, 'registerPost']);
+
+Router::post('/logout', [HomeController::class, 'logoutPost']);

@@ -18,6 +18,11 @@ class Auth extends Facade {
         return $auth->login($data);
     }
 
+    public static function logout(): void {
+        $auth = static::getInstance();
+        $auth->logout();
+    }
+
     static function getFacadeAccessor(): string {
         return 'auth';
     }
