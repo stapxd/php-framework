@@ -1,3 +1,7 @@
+<?php 
+use Vendor\General\Session; 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +14,16 @@
 <body>
     <h1>Register</h1>
 
-    <form action="/register" method="POST">
+    <?php
+        $errors = Session::flash('errors');
+        if(isset($errors) && !empty($errors)) {
+            foreach($errors as $error) {
+                echo '<p style="color:red;">'.$error.'</p>';
+            }
+        }
+    ?>
+
+    <form action="/users/register" method="POST">
         <input type="text" name="email" type="email">
         <input type="text" name="password">
         <button>Submit</button>

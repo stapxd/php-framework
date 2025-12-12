@@ -14,6 +14,12 @@ class Auth {
     public function register(array $data): bool {
         
         if(DB::isConnected()) {
+            if(DB::table('users')->where([
+                'email' => $data['email']
+                ])->num_rows !== 0) {
+                return false;
+            }
+
             DB::table('users')->insert([
                 'email' => $data['email'],
                 'password' => password_hash($data['password'], PASSWORD_BCRYPT)
@@ -28,7 +34,10 @@ class Auth {
     public function login(array $data): bool {
         
         if(DB::isConnected()) {
-            $result = DB::table('users')->where('email', $data['email']);
+            $result = DB::table('users')->where([
+                'email' => $data['email']
+            ]);
+
             $user = mysqli_fetch_assoc($result);
 
             if($user && password_verify($data['password'], $user['password'])) {

@@ -8,6 +8,7 @@ use Vendor\Facades\DB;
 use Vendor\Facades\Schema;
 use Vendor\Foundation\Request;
 use Vendor\Facades\Auth;
+use Vendor\General\Session;
 
 class HomeController extends Controller {
     public function index(Request $request) {
@@ -88,11 +89,15 @@ class HomeController extends Controller {
     public function registerPost(string $email, string $password){
         $result = HomeModel::registerUser($email, $password);
 
+        $errors = [];
         if($result === false){
-            echo "Error registration user.";
+            $errors[] = "User with email $email already exists.";
+            Session::flash('errors', $errors);
+            
+            redirect('/users/register');
         }
         
-        redirect('/');
+        redirect('/users/login');
     }
 
     public function loginPost(string $email, string $password){

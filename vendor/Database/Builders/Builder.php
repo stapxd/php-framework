@@ -7,5 +7,7 @@ class Builder {
     {}
 
     public function insert(array $data) {}
-    public function where(string $columnName, string $data) {}
+    public function where(array $conditions) {}
+    public function update(array $data, array $conditions) {}
+    public function delete(array $conditions) {}
 }

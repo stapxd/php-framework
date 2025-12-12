@@ -13,11 +13,11 @@
 
     <?php 
         if(!$user) {
-            echo '<a href="/login">Login</a>
-            <a href="/register">Register</a>';
+            echo '<a href="/users/login">Login</a>
+            <a href="/users/register">Register</a>';
         }
         else {
-            echo '<form method="POST" action="/logout">
+            echo '<form method="POST" action="/users/logout">
                 <button>Выйти</button>
             </form>';
         }

@@ -6,6 +6,12 @@ use Vendor\Foundation\Request;
 
 class Router extends Facade {
     
+    static function group(string $prefix, $callback) {
+        $router = static::getInstance();
+        
+        return $router->group($prefix, $callback);
+    }
+
     static function get(string $path, $callback) {
         $router = static::getInstance();
         
@@ -16,6 +22,12 @@ class Router extends Facade {
         $router = static::getInstance();
         
         return $router->post($path, $callback);
+    }
+
+    static function routesInfo() {
+        $router = static::getInstance();
+        
+        return $router->routesInfo();
     }
 
     static function execute(Request $request) { 
