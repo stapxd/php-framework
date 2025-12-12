@@ -9,18 +9,32 @@
 </head>
 <body>
     <h1>Home</h1>
-
     <button id="btn-1">Click me</button>
 
-    <form action="/create" method="POST">
+    <?php 
+        if(!$user) {
+            echo '<a href="/users/login">Login</a>
+            <a href="/users/register">Register</a>';
+        }
+        else {
+            echo '<form method="POST" action="/users/logout">
+                <button>Выйти</button>
+            </form>';
+        }
+        echo '<br><br>';
+        var_dump($user);
+    ?>
+
+
+    <!-- <form action="/create" method="POST">
         <input type="text" name="id">
         <input type="text" name="title">
         <button>Submit</button>
-    </form>
+    </form> -->
     
     
     <?php
-    var_dump($data);
+    //var_dump($data);
     // foreach($products as $product) {
     //     echo '<div style="background-color:light-gray;width:200px;height:fit-content">
     //                 <p>'.$product['id'].'</p>

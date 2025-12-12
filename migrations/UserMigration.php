@@ -1,10 +1,10 @@
 <?php
 
-namespace Vendor\Auth;
+namespace Migration;
 
 use Vendor\Facades\Schema;
 
-class User {
+class UserMigration {
     public function up() {
         Schema::create('users', function($table) {
             $table->id();

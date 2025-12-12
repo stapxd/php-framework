@@ -4,6 +4,8 @@ namespace Vendor\Database;
 
 use Exception;
 use mysqli;
+
+use Vendor\Database\Builders\BuilderMySQL;
 use Vendor\Database\Schema\SchemaMySQL;
 
 class DatabaseMySQL extends Database {
@@ -48,5 +50,9 @@ class DatabaseMySQL extends Database {
     public function isTableExists(string $tableName)
     {
         return mysqli_fetch_column($this->connection->query("SHOW TABLES LIKE 'migrations'")) != '' ? true : false;
+    }
+
+    public function table(string $tableName) : BuilderMySQL {
+        return new BuilderMySQL($this->connection, $tableName);
     }
 }

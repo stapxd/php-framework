@@ -19,9 +19,6 @@ class Application {
     
     private function __construct() {
         $this->register(RouterFacade::getFacadeAccessor(), new Router());
-
-        // вынести в отдельный файл AppServiceProvider, например:
-        $this->bind(Request::class, fn() => Request::capture(), true);
     }
 
     public function bind(string $abstract, $concrete, $shared = false) {
@@ -78,6 +75,17 @@ class Application {
         if(!$dbConnection) throw new Exception('.env file does not have DB_CONNECTION!');
 
         $this->register(DB::getFacadeAccessor(), DatabaseFactory::createDatabase($dbConnection));
+        return self::$instance;
+    }
+
+    public function withProviders(array $providers) {
+        foreach($providers as $providerClass) {
+            if(!class_exists($providerClass)) {
+                throw new Exception("Application::withProviders : Provider class $providerClass does not exist");
+            }
+            $provider = new $providerClass($this);
+            $provider->register();
+        }
         return self::$instance;
     }
 

@@ -7,12 +7,21 @@ use Models\HomeModel;
 use Vendor\Facades\DB;
 use Vendor\Facades\Schema;
 use Vendor\Foundation\Request;
+use Vendor\Facades\Auth;
+use Vendor\General\Session;
 
 class HomeController extends Controller {
     public function index(Request $request) {
 
+        $user = Auth::currentUser();
+
+        $data = [
+            'user' => $user,
+        ];
+        return view('home.php', $data);
+
         if(DB::isConnected()) {
-            echo 'Connected';
+            //echo 'Connected';
         
             // Schema::create('products', function($table) {
             //     $table->id();
@@ -24,7 +33,7 @@ class HomeController extends Controller {
             // });
 
             //Schema::dropIfExists('migrations');
-Schema::dropIfExists('products');
+            //Schema::dropIfExists('products');
             //DB::query('DROP TABLE IF EXISTS users');
 
             // DB::query('CREATE TABLE IF NOT EXISTS Users (
@@ -56,17 +65,53 @@ Schema::dropIfExists('products');
                 'id' -> 'INT PRIMARY KEY'
             ]);
             */
-
+            
         }
         else {
             echo 'Error connection';
         }
-
     }
 
     public function create(int $id, string $title) {
         HomeModel::create($id, $title);
         echo "$id $title";
+        redirect('/');
+    }
+
+    public function login(){
+        return view('login.php');
+    }
+
+    public function register(){
+        return view('register.php');
+    }
+
+    public function registerPost(string $email, string $password){
+        $result = HomeModel::registerUser($email, $password);
+
+        $errors = [];
+        if($result === false){
+            $errors[] = "User with email $email already exists.";
+            Session::flash('errors', $errors);
+            
+            redirect('/users/register');
+        }
+        
+        redirect('/users/login');
+    }
+
+    public function loginPost(string $email, string $password){
+        $result = HomeModel::loginUser($email, $password);
+
+        if($result === false){
+            echo "Error login user.";
+        }
+        
+        redirect('/');
+    }
+
+    public function logoutPost(){
+        Auth::logout();
         redirect('/');
     }
 }

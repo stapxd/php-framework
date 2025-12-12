@@ -20,6 +20,7 @@ class ComposerStaticInitf89d44fd1798cb52b8ddee90cc28e5f7
             'Vendor\\Foundation\\' => 18,
             'Vendor\\Facades\\' => 15,
             'Vendor\\Database\\Schema\\' => 23,
+            'Vendor\\Database\\Builders\\' => 25,
             'Vendor\\Database\\' => 16,
             'Vendor\\Auth\\' => 12,
             'Vendor\\App\\' => 11,
@@ -51,6 +52,10 @@ class ComposerStaticInitf89d44fd1798cb52b8ddee90cc28e5f7
         array (
             'Controllers\\' => 12,
         ),
+        'A' => 
+        array (
+            'App\\Providers\\' => 14,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -69,6 +74,10 @@ class ComposerStaticInitf89d44fd1798cb52b8ddee90cc28e5f7
         'Vendor\\Database\\Schema\\' => 
         array (
             0 => __DIR__ . '/..' . '/Database/Schema',
+        ),
+        'Vendor\\Database\\Builders\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/Database/Builders',
         ),
         'Vendor\\Database\\' => 
         array (
@@ -117,6 +126,10 @@ class ComposerStaticInitf89d44fd1798cb52b8ddee90cc28e5f7
         'Controllers\\' => 
         array (
             0 => __DIR__ . '/../..' . '/Controllers',
+        ),
+        'App\\Providers\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app/Providers',
         ),
     );
 
