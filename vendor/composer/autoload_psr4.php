@@ -13,6 +13,7 @@ return array(
     'Vendor\\Database\\Builders\\' => array($vendorDir . '/Database/Builders'),
     'Vendor\\Database\\' => array($vendorDir . '/Database'),
     'Vendor\\Auth\\' => array($vendorDir . '/Auth'),
+    'Vendor\\App\\Http\\' => array($vendorDir . '/App/Http'),
     'Vendor\\App\\' => array($vendorDir . '/App'),
     'Symfony\\Polyfill\\Php80\\' => array($vendorDir . '/symfony/polyfill-php80'),
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
@@ -24,4 +25,5 @@ return array(
     'Dotenv\\' => array($vendorDir . '/vlucas/phpdotenv/src'),
     'Controllers\\' => array($baseDir . '/Controllers'),
     'App\\Providers\\' => array($baseDir . '/app/Providers'),
+    'App\\Middlewares\\' => array($baseDir . '/app/Middlewares'),
 );

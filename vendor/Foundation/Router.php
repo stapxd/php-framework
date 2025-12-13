@@ -3,134 +3,142 @@
 namespace Vendor\Foundation;
 
 use Exception;
-use ReflectionMethod;
-use Vendor\General\Converter;
 
 class Router {
-    private array $routes;
-    private string $currentGroup = '';
+    private array $routes = [];
 
-    public function __construct() {
-        $routes = [];
-    }
+    private array $currentGroup = [
+        'prefix' => '',
+        'middlewares' => []
+    ];
 
-    public function routesInfo() {
-        if(empty($this->routes)) {
-            echo '<h1 style="
+    public function __construct() 
+    {}
+
+    public function routesInfo(){
+        if (empty($this->routes)) {
+            echo '
+            <div style="
                 font-family: sans-serif;
-                color: #9d2424ff;
-            ">No routes registered</h1>';
+                color: #9d2424;
+                background: #fdeaea;
+                padding: 16px;
+                border-radius: 8px;
+                width: fit-content;
+            ">
+                <strong>No routes registered</strong>
+            </div>';
             return;
         }
 
-        echo '<h1 style="
-            font-family: sans-serif;
-            color: #333;
-        ">Registered Routes:</h1>';
-        
-        foreach ($this->routes as $method => $paths) {
-            echo '<h2 style="
-                font-family: sans-serif;
-            ">'.$method.'</h2>';
+        echo '
+        <div style="width: 100%; font-family: sans-serif; margin: 20px 0;">
+            <h2 style="margin-bottom: 12px; color: #333;">Registered Routes</h2>
 
-            echo '<table style="
-                width: 100%;
+            <table style="
                 border-collapse: collapse;
+                min-width: 600px;
                 background: #fff;
-                font-family: sans-serif;
-                font-size: 14px;
-            ">';
+                border: 1px solid #ddd;
+                overflow: hidden;
+                width: 100%;
+            ">
+                <thead>
+                    <tr style="background: #f5f5f5;">
+                        <th style="width: 10%; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">METHOD</th>
+                        <th style="width: 30%; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">PATH</th>
+                        <th style="width: 60%; padding: 12px 16px; text-align: left; border: 1px solid #ddd;">CALLBACK</th>
+                    </tr>
+                </thead>
+                <tbody>
+        ';
 
-            echo '
-            <thead style="background: #f0f0f0;">
-                <tr>
-                    <th style="
-                        width: 40%;
-                        padding: 12px 14px;
-                        font-weight: 600;
-                        text-transform: uppercase;
-                        letter-spacing: 0.5px;
-                        border: 1px solid #ddd;
-                        border-bottom: 2px solid #ccc;
-                        text-align: left;
-                    ">Path</th>
+        foreach ($this->routes as $index => $route) {
+            $method = strtoupper($route->getMethod());
+            $path   = $route->getPath();
+            $callback = $route->getCallback();
 
-                    <th style="
-                        width: 60%;
-                        padding: 12px 14px;
-                        font-weight: 600;
-                        text-transform: uppercase;
-                        letter-spacing: 0.5px;
-                        border: 1px solid #ddd;
-                        border-bottom: 2px solid #ccc;
-                        text-align: left;
-                    ">Callback</th>
-                </tr>
-            </thead>
-            ';
+            $methodColor = match ($method) {
+                'GET'    => '#1e88e5',
+                'POST'   => '#43a047',
+                default  => '#6d6d6d',
+            };
 
-            foreach ($paths as $path => $info) {
-                echo '<tr style="transition: background 0.2s;" 
-                        onmouseover="this.style.background=\'#f0f8ff\'"
-                        onmouseout="this.style.background=\'\'">';
-
-                echo '<td style="
-                    padding: 10px 14px;
-                    border: 1px solid #ddd;
-                ">'.$path.'</td>';
-
-                if (is_callable($info['callback'])) {
-                    echo '<td style="
-                        padding: 10px 14px;
-                        border: 1px solid #ddd;
-                    ">Closure</td>';
-                }
-                elseif (is_array($info['callback']) && count($info['callback']) == 2) {
-                    [$class, $methodName] = $info['callback'];
-                    echo '<td style="
-                        padding: 10px 14px;
-                        border: 1px solid #ddd;
-                    ">'.$class.'::'.$methodName.'</td>';
-                }
-
-                echo '</tr>';
+            if (is_callable($callback)) {
+                $callbackText = 'Closure';
+            } elseif (is_array($callback) && count($callback) === 2) {
+                [$class, $methodName] = $callback;
+                $callbackText = $class . '::' . $methodName;
+            } else {
+                $callbackText = 'Unknown';
             }
-
-            echo '</table>';
+            $rowBg = $index % 2 === 0 ? '#fafafa' : '#fff';
+            echo '
+                <tr style="background: '.$rowBg.';">
+                    <td style="padding: 10px 16px; border: 1px solid #ddd;">
+                        <span style="
+                            display: inline-block;
+                            padding: 4px 10px;
+                            border-radius: 6px;
+                            font-weight: bold;
+                            color: #fff;
+                            background: '.$methodColor.';
+                            font-size: 12px;
+                        ">
+                            '.$method.'
+                        </span>
+                    </td>
+                    <td style="padding: 10px 16px; color: #1565c0; border: 1px solid #ddd;">
+                        '.$path.'
+                    </td>
+                    <td style="
+                        padding: 10px 16px;
+                        font-family: monospace;
+                        color: #444;
+                        border: 1px solid #ddd;
+                    ">
+                        '.$callbackText.'
+                    </td>
+                </tr>
+            ';
         }
 
+        echo '
+                </tbody>
+            </table>
+        </div>
+        ';
+    }
 
-        // echo '<pre>';
-        // print_r($this->routes);
-        // echo '</pre>';
+    public function middleware(array $middlewares) {
+        $this->currentGroup['middlewares'] = array_merge(
+            $this->currentGroup['middlewares'] ?? [],
+            $middlewares
+        );
+        return $this;
     }
 
     public function group(string $prefix, callable $callback) {
         if(!str_starts_with($prefix, '/')) {
             $prefix = '/'.$prefix;
         }
-        $previousGroup = $this->currentGroup;
-        $this->currentGroup .= $prefix;
+        $previousGroup = $this->currentGroup['prefix'] ?? '';
+        $previousMiddlewares = $this->currentGroup['middlewares'] ?? [];
+
+        $this->currentGroup['prefix'] .= $prefix;
 
         $callback();
 
-        $this->currentGroup = $previousGroup;
+        $this->currentGroup['prefix'] = $previousGroup;
+        $this->currentGroup['middlewares'] = $previousMiddlewares;
     }
 
     public function get(string $path, $callback) {
-        $path = $this->modifyPath($path);
-
-        $this->routes['GET'][$path] = [
-                    'callback' => $callback
-                ];
+        return $this->addRoute('GET', $path, $callback);
     }
 
     public function post(string $path, $callback) {
-        $path = $this->modifyPath($path);
-
-        $this->routes['POST'][$path] = [
-                    'callback' => $callback
-                ];
+        return $this->addRoute('POST', $path, $callback);
     }
 
     public function execute(Request $request) {
@@ -140,69 +148,14 @@ class Router {
 
         $method = $request->getMethod();
 
-        if(!$this->pathExists($method, $realPath)) {
+        $currentRoute = $this->findRoute($method, $realPath);
+
+        if($currentRoute) {
+            return $currentRoute->execute($request);
+        }
+        else {
             return include(__DIR__.'\..\..\Views\404.php');
         }
-
-        $callback = $this->routes[$method][$realPath]['callback'];
-
-        if(is_callable($callback)) { $callback(); }
-        else if (is_array($callback) && count($callback) == 2){
-
-            [$class, $method] = $callback;
-            
-            $reflection = new ReflectionMethod($class, $method);
-            $args = $this->getArgs($reflection, $request);
-
-            if (method_exists($class, $method)) {
-                $object = new $class();
-                return $reflection->invokeArgs($object, $args);
-            }
-        }
-    }
-
-    private function pathExists(string $method, string $path) {
-        if(!isset($this->routes[$method][$path]['callback'])) {
-            return false;
-        }
-        return true;
-    }
-
-    private function getArgs(ReflectionMethod $reflection, Request $request) {
-        $args = [];
-        foreach ($reflection->getParameters() as $param) {
-            $type = $param->getType();
-
-            if($type && !$type->isBuiltin()) {
-                $typeName = $type->getName();
-                $args[] = app($typeName);
-            }
-            else {
-                $type = $param->getType();
-                $name = $param->getName();
-                
-                $value = Converter::convertToType($type, $this->getRequestParamByMethod($request, $request->getMethod(), $name));
-                
-                if ($value === null && !$param->isOptional())
-                    throw new Exception("Missing required parameter: $name");
-                
-                $args[] = $value ?? $param->getDefaultValue();
-            }
-        }
-        return $args;
-    }
-
-    private function getRequestParamByMethod(Request $request, string $method, string $paramName) {
-        $result = null;
-
-        if($method == 'GET') $result = $request->query($paramName);
-        else if ($method == 'POST') $result = $request->input($paramName);
-
-        if($result == null) {
-            throw new Exception("Param ($paramName) does not exist in $method request!");
-        }
-
-        return $result;
     }
 
     private function modifyPath(string $path): string {
@@ -210,10 +163,35 @@ class Router {
             $path = '/'.$path;
         }
 
-        if($this->currentGroup !== '') {
-            $path = $this->currentGroup . $path;
+        if($this->currentGroup['prefix'] !== '') {
+            $path = $this->currentGroup['prefix'] . $path;
         }
 
         return $path;
+    }
+
+    private function findRoute(string $method, string $realPath) {
+        foreach ($this->routes as $route) {
+            if($route->getMethod() === $method && $route->getPath() === $realPath) {
+                return $route;
+            }
+        }
+        return null;
+    }
+
+    private function addRoute(string $method, string $path, $callback) {
+        $path = $this->modifyPath($path);
+
+        if($this->findRoute($method, $path)) {
+            throw new Exception("Route already exists for $method $path");
+        }
+
+        $this->routes[] = new Route($method, $path, $callback);
+
+        $currentRoute = $this->findRoute($method, $path);
+        
+        $currentRoute->middleware($this->currentGroup['middlewares'] ?? []);
+
+        return $currentRoute;
     }
 }

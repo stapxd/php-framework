@@ -6,6 +6,12 @@ use Vendor\Foundation\Request;
 
 class Router extends Facade {
     
+    static function middleware(array $middlewares) {
+        $router = static::getInstance();
+        
+        return $router->middleware($middlewares);
+    }
+
     static function group(string $prefix, $callback) {
         $router = static::getInstance();
         
