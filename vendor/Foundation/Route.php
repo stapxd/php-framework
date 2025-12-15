@@ -27,7 +27,7 @@ class Route {
     }
 
     public function middleware(array $middlewares) {
-        $this->middlewares[] = array_merge(
+        $this->middlewares = array_merge(
             $this->middlewares, 
             $middlewares
         );
@@ -55,6 +55,9 @@ class Route {
         $next =  $final;
 
         foreach (array_reverse($this->middlewares) as $middlewareClass) {
+            if (!class_exists($middlewareClass)) {
+                throw new Exception("Middleware class $middlewareClass does not exist.");
+            }
             $middleware = new $middlewareClass();
             
             $prevNext = $next;
