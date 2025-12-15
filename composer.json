@@ -3,6 +3,7 @@
         "psr-4": {
             "Vendor\\Foundation\\": "vendor/Foundation/",
             "Vendor\\App\\": "vendor/App/",
+            "Vendor\\App\\Http\\": "vendor/App/Http/",
             "Vendor\\Database\\": "vendor/Database/",
             "Vendor\\Database\\Schema\\": "vendor/Database/Schema/",
             "Vendor\\Database\\Builders\\": "vendor/Database/Builders/",
@@ -12,7 +13,8 @@
             "Migration\\": "migrations/",
             "Controllers\\": "Controllers/",
             "Models\\": "Models/",
-            "App\\Providers\\": "app/Providers/"
+            "App\\Providers\\": "app/Providers/",
+            "App\\Middlewares\\": "app/Middlewares/"
         },
         "files": [
             "vendor/General/helpers.php"

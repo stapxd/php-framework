@@ -7,4 +7,7 @@ return Application::instance()
     ->withProviders([
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthProvider::class,
+    ])
+    ->withMiddlewares([
+        App\Middlewares\TestMiddleware1::class,
     ]);

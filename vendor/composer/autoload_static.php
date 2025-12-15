@@ -23,6 +23,7 @@ class ComposerStaticInitf89d44fd1798cb52b8ddee90cc28e5f7
             'Vendor\\Database\\Builders\\' => 25,
             'Vendor\\Database\\' => 16,
             'Vendor\\Auth\\' => 12,
+            'Vendor\\App\\Http\\' => 16,
             'Vendor\\App\\' => 11,
         ),
         'S' => 
@@ -55,6 +56,7 @@ class ComposerStaticInitf89d44fd1798cb52b8ddee90cc28e5f7
         'A' => 
         array (
             'App\\Providers\\' => 14,
+            'App\\Middlewares\\' => 16,
         ),
     );
 
@@ -86,6 +88,10 @@ class ComposerStaticInitf89d44fd1798cb52b8ddee90cc28e5f7
         'Vendor\\Auth\\' => 
         array (
             0 => __DIR__ . '/..' . '/Auth',
+        ),
+        'Vendor\\App\\Http\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/App/Http',
         ),
         'Vendor\\App\\' => 
         array (
@@ -130,6 +136,10 @@ class ComposerStaticInitf89d44fd1798cb52b8ddee90cc28e5f7
         'App\\Providers\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app/Providers',
+        ),
+        'App\\Middlewares\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app/Middlewares',
         ),
     );
 

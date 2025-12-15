@@ -16,6 +16,8 @@ class Application {
 
     private array $services;
     private array $bindings;
+
+    private array $middlewares = [];
     
     private function __construct() {
         $this->register(RouterFacade::getFacadeAccessor(), new Router());
@@ -68,7 +70,26 @@ class Application {
     }
 
     public function handleRequest(Request $request) {
-        RouterFacade::execute($request);
+        $final = function($request){
+            return RouterFacade::execute($request);
+        };
+
+        $next =  $final;
+
+        foreach (array_reverse($this->middlewares) as $middlewareClass) {
+            if(!class_exists($middlewareClass)) {
+                throw new Exception("Middleware class $middlewareClass does not exist");
+            }
+            $middleware = new $middlewareClass();
+            
+            $prevNext = $next;
+
+            $next = function($request) use ($middleware, $prevNext) {
+                return $middleware->handle($request, $prevNext);
+            };
+        }
+        
+        return $next($request);
     }
 
     public function withDatabase(string $dbConnection) {
@@ -86,6 +107,11 @@ class Application {
             $provider = new $providerClass($this);
             $provider->register();
         }
+        return self::$instance;
+    }
+    
+    public function withMiddlewares(array $middlewares) {
+        $this->middlewares = $middlewares;
         return self::$instance;
     }
 
