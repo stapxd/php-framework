@@ -77,7 +77,10 @@ class Route {
 
             if($type && !$type->isBuiltin()) {
                 $typeName = $type->getName();
-                $args[] = app($typeName);
+                if($typeName == Request::class)
+                    $args[] = $request;
+                else 
+                    $args[] = app($typeName);
             }
             else {
                 $type = $param->getType();
