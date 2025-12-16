@@ -39,4 +39,10 @@ class Request {
         if(isset($this->postParams[$param])) return $this->postParams[$param];
         return $default;
     }
+
+    public function getAny(string $param, $default = null) {
+        if(isset($this->postParams[$param])) return $this->postParams[$param];
+        if(isset($this->getParams[$param])) return $this->getParams[$param];
+        return $default;
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Vendor\General\Validator;
+namespace Vendor\General\Validator\Validators;
 
 class RequiredValidator extends ValidatorBase {
     public function validate($field, $value) : bool {

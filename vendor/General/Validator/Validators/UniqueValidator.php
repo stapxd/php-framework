@@ -1,6 +1,6 @@
 <?php
 
-namespace Vendor\General\Validator;
+namespace Vendor\General\Validator\Validators;
 
 use Vendor\Facades\DB;
 

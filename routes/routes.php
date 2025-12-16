@@ -27,3 +27,8 @@ Router::middleware([TestMiddleware2::class])->group('users', function() {
 
     Router::post('/logout', [HomeController::class, 'logoutPost']);
 });
+
+Router::group('form', function() {
+    Router::get('/', [HomeController::class, 'formIndex']);
+    Router::post('/submit', [HomeController::class, 'formSubmit']);
+});

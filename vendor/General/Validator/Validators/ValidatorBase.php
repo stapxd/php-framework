@@ -1,9 +1,9 @@
 <?php
 
-namespace Vendor\General\Validator;
+namespace Vendor\General\Validator\Validators;
 
 class ValidatorBase {
-    private $error = '';
+    protected $error = '';
 
     public function validate($field, $value) : bool {}
 

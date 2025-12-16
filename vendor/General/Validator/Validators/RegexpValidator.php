@@ -1,6 +1,6 @@
 <?php
 
-namespace Vendor\General\Validator;
+namespace Vendor\General\Validator\Validators;
 
 class RegexpValidator extends ValidatorBase {
     private string $regexp;

@@ -3,6 +3,14 @@
 namespace Vendor\General\Validator;
 
 use Exception;
+use Vendor\General\Validator\Validators\MaxLengthValidator;;
+use Vendor\General\Validator\Validators\MinLengthValidator;
+use Vendor\General\Validator\Validators\RequiredValidator;
+use Vendor\General\Validator\Validators\MinValidator;
+use Vendor\General\Validator\Validators\MaxValidator;
+use Vendor\General\Validator\Validators\RegexpValidator;
+use Vendor\General\Validator\Validators\UniqueValidator;
+use Vendor\General\Validator\Validators\ValidatorBase;
 
 class ValidatorFactory {
     public static function create(string $rule): ValidatorBase {

@@ -10,6 +10,8 @@
             "Vendor\\Auth\\": "vendor/Auth/",
             "Vendor\\Facades\\": "vendor/Facades/",
             "Vendor\\General\\": "vendor/General/",
+            "Vendor\\General\\Validator\\": "vendor/General/Validator/",
+            "Vendor\\General\\Validator\\Validators\\": "vendor/General/Validator/Validators/",
             "Migration\\": "migrations/",
             "Controllers\\": "Controllers/",
             "Models\\": "Models/",

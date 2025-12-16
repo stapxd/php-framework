@@ -9,6 +9,7 @@ use Vendor\Facades\Schema;
 use Vendor\Foundation\Request;
 use Vendor\Facades\Auth;
 use Vendor\General\Session;
+use Vendor\General\Validator\Validator;
 
 class HomeController extends Controller {
     public function index(Request $request) {
@@ -113,5 +114,33 @@ class HomeController extends Controller {
     public function logoutPost(){
         Auth::logout();
         redirect('/');
+    }
+
+    public function formIndex() {
+        $formData = Session::flash('formData');
+        return view('form.php', ['formData' => $formData]);
+    }
+
+    public function formSubmit(Request $request) {
+        $validated = Validator::validate($request, [
+            'username' => 'required|min_length:3|max_length:10',
+            'email' => 'unique:users|regexp:/^[\w.-]+@[\w.-]+\.[A-Za-z]{2,6}$/',
+            'age' => 'min:18|max:100'
+        ]);
+
+        if(!$validated) {
+            $formData = [
+                'username' => $request->input('username'),
+                'email' => $request->input('email'),
+                'age' => $request->input('age')
+            ];
+
+            Session::flash('formData', $formData);
+
+            redirect('/form');
+        }
+        else {
+            echo "Form submitted successfully!";
+        }
     }
 }

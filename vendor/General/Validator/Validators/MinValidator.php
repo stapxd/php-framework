@@ -1,6 +1,6 @@
 <?php
 
-namespace Vendor\General\Validator;
+namespace Vendor\General\Validator\Validators;
 
 class MinValidator extends ValidatorBase {
     private int $minValue;
