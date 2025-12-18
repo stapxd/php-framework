@@ -12,6 +12,8 @@ class Router {
         'middlewares' => []
     ];
 
+    private array $pendingMiddlewares = [];
+
     public function __construct() 
     {}
 
@@ -111,10 +113,7 @@ class Router {
     }
 
     public function middleware(array $middlewares) {
-        $this->currentGroup['middlewares'] = array_merge(
-            $this->currentGroup['middlewares'] ?? [],
-            $middlewares
-        );
+        $this->pendingMiddlewares = $middlewares;
         return $this;
     }
 
@@ -122,14 +121,16 @@ class Router {
         if(!str_starts_with($prefix, '/')) {
             $prefix = '/'.$prefix;
         }
-        $previousGroup = $this->currentGroup['prefix'] ?? '';
+        $previousGroupPrefix = $this->currentGroup['prefix'] ?? '';
         $previousMiddlewares = $this->currentGroup['middlewares'] ?? [];
 
         $this->currentGroup['prefix'] .= $prefix;
+        $this->currentGroup['middlewares'] = array_merge($previousMiddlewares, $this->pendingMiddlewares);
+        $this->pendingMiddlewares = [];
 
         $callback();
 
-        $this->currentGroup['prefix'] = $previousGroup;
+        $this->currentGroup['prefix'] = $previousGroupPrefix;
         $this->currentGroup['middlewares'] = $previousMiddlewares;
     }
 
@@ -164,6 +165,9 @@ class Router {
         }
 
         if($this->currentGroup['prefix'] !== '') {
+            if($path === '/') {
+                $path = '';
+            }
             $path = $this->currentGroup['prefix'] . $path;
         }
 
