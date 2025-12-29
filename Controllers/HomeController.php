@@ -104,8 +104,10 @@ class HomeController extends Controller {
     public function loginPost(string $email, string $password){
         $result = HomeModel::loginUser($email, $password);
 
+        $errors = [];
         if($result === false){
-            echo "Error login user.";
+            $errors[] = "Login error: incorrect email or password.";
+            Session::flash('errors', $errors);
         }
         
         redirect('/');
