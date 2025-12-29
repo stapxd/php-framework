@@ -5,6 +5,11 @@ namespace Vendor\Auth;
 use Vendor\Facades\DB;
 
 class Auth {
+    protected $fields = [
+        'login' => 'email', 
+        'password' => 'password'
+    ];
+
     public function __construct() {}
 
     public function currentUser() {
@@ -15,19 +20,20 @@ class Auth {
         
         if(DB::isConnected()) {
             if(DB::table('users')->where([
-                'email' => $data['email']
+                $this->fields['login'] => $data[$this->fields['login']]
                 ])->num_rows !== 0) {
                 return false;
             }
 
             DB::table('users')->insert([
-                'email' => $data['email'],
-                'password' => password_hash($data['password'], PASSWORD_BCRYPT)
+                $this->fields['login'] => $data[$this->fields['login']],
+                $this->fields['password'] => password_hash($data[$this->fields['password']], PASSWORD_BCRYPT)
             ]);
             
             return true;
         }
 
+        echo "Fatal error: Unable to connect to database.";
         return false;
     }
 
@@ -35,12 +41,13 @@ class Auth {
         
         if(DB::isConnected()) {
             $result = DB::table('users')->where([
-                'email' => $data['email']
+                $this->fields['login'] => $data[$this->fields['login']]
             ]);
 
             $user = mysqli_fetch_assoc($result);
 
-            if($user && password_verify($data['password'], $user['password'])) {
+            if($user && password_verify($data[$this->fields['password']], $user[$this->fields['password']])) {
+                unset($user[$this->fields['password']]);
                 setcookie('currect_user', json_encode($user), time() + 60*60*24*7, "/");
                 return true;
             }

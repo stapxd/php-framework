@@ -11,6 +11,10 @@
     <h1>Home</h1>
     <button id="btn-1">Click me</button>
 
+    <?php
+    include_once '../Views/partials/errors.php';
+    ?>
+
     <?php 
         if(!$user) {
             echo '<a href="/users/login">Login</a>
