@@ -3,6 +3,7 @@
 namespace Vendor\Auth;
 
 use Vendor\Facades\DB;
+use Vendor\General\Cookie;
 
 class Auth {
     protected $fields = [
@@ -13,7 +14,7 @@ class Auth {
     public function __construct() {}
 
     public function currentUser() {
-        return isset($_COOKIE['currect_user']) ? json_decode($_COOKIE['currect_user'], true) : null;
+        return Cookie::exists('currect_user') ? json_decode(Cookie::get('currect_user'), true) : null;
     }
 
     public function register(array $data): bool {
@@ -48,7 +49,7 @@ class Auth {
 
             if($user && password_verify($data[$this->fields['password']], $user[$this->fields['password']])) {
                 unset($user[$this->fields['password']]);
-                setcookie('currect_user', json_encode($user), time() + 60*60*24*7, "/");
+                Cookie::set('currect_user', json_encode($user), time() + 60*60*24*7);
                 return true;
             }
             else {
@@ -61,6 +62,6 @@ class Auth {
     }
 
     public function logout(): void {
-        setcookie('currect_user', '', time() - 3600, "/");
+        Cookie::delete('currect_user');
     }
 }
