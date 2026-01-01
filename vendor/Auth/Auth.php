@@ -20,9 +20,9 @@ class Auth {
     public function register(array $data): bool {
         
         if(DB::isConnected()) {
-            if(DB::table('users')->where([
+            if(DB::table('users')->select()->where([
                 $this->fields['login'] => $data[$this->fields['login']]
-                ])->num_rows !== 0) {
+                ])->find()->num_rows !== 0) {
                 return false;
             }
 
@@ -41,9 +41,9 @@ class Auth {
     public function login(array $data): bool {
         
         if(DB::isConnected()) {
-            $result = DB::table('users')->where([
+            $result = DB::table('users')->select()->where([
                 $this->fields['login'] => $data[$this->fields['login']]
-            ]);
+            ])->find();
 
             $user = mysqli_fetch_assoc($result);
 

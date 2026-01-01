@@ -14,6 +14,8 @@ use Vendor\General\Validator\Validator;
 class HomeController extends Controller {
     public function index(Request $request) {
 
+        HomeModel::getAll();
+
         $user = Auth::currentUser();
 
         $data = [

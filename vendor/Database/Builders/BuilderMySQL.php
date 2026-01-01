@@ -12,6 +12,25 @@ class BuilderMySQL extends Builder {
         return "'" . mysqli_real_escape_string($this->connection, $value) . "'";
     }
 
+    public function wrapName(string $name): string {
+        if($name === '*')
+            return $name;
+        $names = explode('.', $name);
+        return implode('.', array_map(fn($innerName) => '`' . str_replace('`', '', $innerName) . '`', $names));
+    }
+
+    public function select(array $columns = ['*']) {
+        $this->selectColumns = $columns;
+        $columnsList = implode(', ', array_map(fn($col) => $this->wrapName($col), $columns));
+        $this->sql = "SELECT $columnsList FROM " . $this->wrapName($this->tableName) . " ";
+        return $this;
+    }
+
+    public function find() {
+        echo $this->sql;
+        return DB::query($this->sql);
+    }
+
     public function insert(array $data) {
         $fields = implode(", ", array_keys($data));
 
@@ -28,16 +47,26 @@ class BuilderMySQL extends Builder {
     }
 
     public function where(array $conditions) {
-        $sql = "SELECT * FROM $this->tableName WHERE ";
+        $tableName = $this->wrapName($this->tableName);
+        $this->sql .= " WHERE ";
 
         $whereClauses = [];
         foreach ($conditions as $column => $value) {
-            $whereClauses[] = $column . ' = ' . $this->escapeValue($value);
+            $whereClauses[] = $this->wrapName($column) . ' = ' . $this->escapeValue($value);
         }
         
-        $sql .= implode(' AND ', $whereClauses);
+        $this->sql .= implode(' AND ', $whereClauses);
 
-        return DB::query($sql);
+        return $this;
+    }
+    
+    public function innerJoin(string $table, string $firstColumn, string $secondColumn) {
+        $table = $this->wrapName($table);
+        $firstColumn = $this->wrapName($firstColumn);
+        $secondColumn = $this->wrapName($secondColumn);
+
+        $this->sql .= ' INNER JOIN '.$this->wrapName($table).' ON '.$firstColumn.' = '.$secondColumn.' ';
+        return $this;
     }
 
     public function update(array $data, array $conditions) {
@@ -45,12 +74,12 @@ class BuilderMySQL extends Builder {
 
         $setClauses = [];
         foreach ($data as $column => $value) {
-            $setClauses[] = $column . ' = ' . $this->escapeValue($value);
+            $setClauses[] = $this->wrapName($column) . ' = ' . $this->escapeValue($value);
         }
 
         $whereClauses = [];
         foreach ($conditions as $column => $value) {
-            $whereClauses[] = $column . ' = ' . $this->escapeValue($value);
+            $whereClauses[] = $this->wrapName($column) . ' = ' . $this->escapeValue($value);
         }
         
         $sql .= implode(', ', $setClauses);
@@ -66,7 +95,7 @@ class BuilderMySQL extends Builder {
 
         $whereClauses = [];
         foreach ($conditions as $column => $value) {
-            $whereClauses[] = $column . ' = ' . $this->escapeValue($value);
+            $whereClauses[] = $this->wrapName($column) . ' = ' . $this->escapeValue($value);
         }
 
         $sql .= implode(' AND ', $whereClauses);
