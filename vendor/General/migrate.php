@@ -12,7 +12,7 @@ $app = require __DIR__.'/../../app/app.php';
 
 app()->register('schema', DB::getSchema());
 
-$migrationTableExists = DB::isTableExists('migrations');
+$migrationTableExists = DB::doesTableExist('migrations');
 
 if(!$migrationTableExists) {
     $migrationTable = new Migration();
@@ -33,14 +33,15 @@ $batch = $row['max_batch'] ?? 0;
 $batch++;
 
 foreach ($files as $file) {
-    if($file == 'Migration.php') continue;
+    if($file == '000_migration.php') continue;
     if(in_array($file, $executed)) continue;
 
     if(pathinfo($file, PATHINFO_EXTENSION) === 'php'){
         require_once $migrationsPath.'/'.$file;
-        
-        $className = 'Migration\\' . pathinfo($file, PATHINFO_FILENAME);
 
+        $filename = pathinfo($file, PATHINFO_FILENAME);
+        $className = 'Migration\\' . preg_replace('/^\d+_/', '', $filename);
+        
         if(class_exists($className)) {
             $migration = new $className();
             if(method_exists($migration, 'up')){

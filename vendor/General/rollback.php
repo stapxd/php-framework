@@ -12,7 +12,7 @@ $app = require __DIR__.'/../../app/app.php';
 
 app()->register('schema', DB::getSchema());
 
-$migrationTableExists = DB::isTableExists('migrations');
+$migrationTableExists = DB::doesTableExist('migrations');
 
 if(!$migrationTableExists) {
     $migrationTable = new Migration();
@@ -36,8 +36,8 @@ $result = DB::query("SELECT * FROM migrations WHERE batch=$batch");
 while ($row = mysqli_fetch_assoc($result)) {
     
     require_once $migrationsPath.'/'.$row['name'];
-    
-    $className = 'Migration\\' . explode('.',$row['name'])[0];
+
+    $className = 'Migration\\' . preg_replace('/^\d+_/', '', explode('.',$row['name'])[0]);
 
     if(class_exists($className)) {
         

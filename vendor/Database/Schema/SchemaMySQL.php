@@ -6,7 +6,7 @@ use Vendor\Facades\DB;
 
 class SchemaMySQL extends SchemaBuilder {
     public function create(string $tableName, callable $callback) {
-        $blueprint = new Blueprint($tableName);
+        $blueprint = new BlueprintMySQL($tableName);
     
         $callback($blueprint);
         $sql = $blueprint->toQuery();

@@ -2,68 +2,40 @@
 
 namespace Vendor\Database\Schema;
 
-class Blueprint {
-    private string $tableName;
-    private array $columns;
+abstract class Blueprint {
+    protected string $tableName;
+    protected array $columns;
+    protected array $foreignKeys = [];
 
     public function __construct(string $tableName) {
         $this->tableName = $tableName;
+        $this->columns = [];
+        $this->foreignKeys = [];
     }
 
-    public function id($name = 'id') {
-        $this->columns[] = "$name INT UNSIGNED PRIMARY KEY AUTO_INCREMENT";
-    }
+    abstract public function wrapName(string $name): string;
 
-    public function string($name, $length = 255, $canBeNull = true, $isUnique = false) {
-        $null = $canBeNull ? '' : 'NOT NULL';
-        $unique = $isUnique ? 'UNIQUE' : '';
+    abstract public function foreign(string $columnName);
 
-        $this->columns[] = "$name VARCHAR($length) $null $unique";
-    }
+    abstract public function id($name = 'id');
 
-    public function text($name, $canBeNull = true) {
-        $null = $canBeNull ? '' : 'NOT NULL';
+    abstract public function string($name, $length = 255, $canBeNull = true, $isUnique = false);
 
-        $this->columns[] = "$name TEXT $null";
-    }
+    abstract public function text($name, $canBeNull = true);
 
-    public function int($name, $canBeNull = true, $isUnique = false, $isUnsigned = false) {
-        $null = $canBeNull ? '' : 'NOT NULL';
-        $unique = $isUnique ? 'UNIQUE' : '';
-        $unsigned = $isUnsigned ? 'UNSIGNED' : '';
+    abstract public function int($name, $canBeNull = true, $isUnique = false, $isUnsigned = false);
 
-        $this->columns[] = "$name INT $unsigned $null $unique";
-    }
+    abstract public function double($name, $M, $D, $canBeNull = true, $isUnique = false, $isUnsigned = false);
 
-    public function double($name, $M, $D, $canBeNull = true, $isUnique = false, $isUnsigned = false) {
-        $null = $canBeNull ? '' : 'NOT NULL';
-        $unique = $isUnique ? 'UNIQUE' : '';
-        $unsigned = $isUnsigned ? 'UNSIGNED' : '';
+    abstract public function date($name, $canBeNull = true, $isUnique = false);
+    
+    abstract public function datetime($name, $canBeNull = true, $isUnique = false);
 
-        $this->columns[] = "$name DOUBLE($M, $D) $unsigned $null $unique";
-    }
+    abstract public function timestamps();
 
-    public function date($name, $canBeNull = true, $isUnique = false) {
-        $null = $canBeNull ? '' : 'NOT NULL';
-        $unique = $isUnique ? 'UNIQUE' : '';
+    abstract public function toQuery();
 
-        $this->columns[] = "$name DATE $null $unique";
-    }
+    abstract public function toTableQuery();
 
-    public function datetime($name, $canBeNull = true, $isUnique = false) {
-        $null = $canBeNull ? '' : 'NOT NULL';
-        $unique = $isUnique ? 'UNIQUE' : '';
-
-        $this->columns[] = "$name DATETIME $null $unique";
-    }
-
-    public function timestamps() {
-        $this->columns[] = "created_at DATETIME NOT NULL";
-        $this->columns[] = "updated_at DATETIME NOT NULL";
-    }
-
-    public function toQuery() {
-        $columnsSQL = implode(', ', $this->columns);
-        return 'CREATE TABLE '.$this->tableName.' ('.($columnsSQL).')';
-    }
+    abstract public function toForeignKeysQuery();
 }
