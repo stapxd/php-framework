@@ -14,10 +14,10 @@ class DB extends Facade {
         return $db->dropIfExists($tableName);
     }
 
-    public static function isTableExists(string $tableName)
+    public static function doesTableExist(string $tableName)
     {
         $db = static::getInstance();
-        return $db->isTableExists($tableName);
+        return $db->doesTableExist($tableName);
     }
 
     public static function isConnected() {

@@ -47,9 +47,9 @@ class DatabaseMySQL extends Database {
         return $result;
     }
 
-    public function isTableExists(string $tableName)
+    public function doesTableExist(string $tableName)
     {
-        return mysqli_fetch_column($this->connection->query("SHOW TABLES LIKE 'migrations'")) != '' ? true : false;
+        return mysqli_fetch_column($this->connection->query("SHOW TABLES LIKE '$tableName'")) != '' ? true : false;
     }
 
     public function table(string $tableName) : BuilderMySQL {

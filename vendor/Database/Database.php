@@ -12,7 +12,7 @@ abstract class Database {
 
     abstract function query(string $query);
     abstract function dropIfExists(string $tableName);
-    abstract function isTableExists(string $tableName);
+    abstract function doesTableExist(string $tableName);
 
     abstract function getSchema();
     abstract function table(string $tableName) : Builders\Builder;

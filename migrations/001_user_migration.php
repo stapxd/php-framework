@@ -3,8 +3,9 @@
 namespace Migration;
 
 use Vendor\Facades\Schema;
+use Vendor\Facades\DB;
 
-class UserMigration {
+class user_migration {
     public function up() {
         Schema::create('users', function($table) {
             $table->id();
@@ -14,6 +15,8 @@ class UserMigration {
     }
 
     public function down() {
+        DB::query('ALTER TABLE products DROP FOREIGN KEY products_created_by_fk');
+
         Schema::dropIfExists('users');
     }
 }
