@@ -11,11 +11,7 @@ class HomeModel extends Model {
     private static array $products = [];
 
     public static function getAll() {
-        //var_dump(Application::instance());
-
-        DB::query("SELECT * ...");
-
-        return self::$products;
+        DB::table('products')->select()->innerJoin('users', 'products.created_by', 'users.id')->where(['title' => 'Aaa'])->find();
     }
 
     public static function create(int $id, string $title) {
