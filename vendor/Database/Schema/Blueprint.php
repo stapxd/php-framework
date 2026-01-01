@@ -43,6 +43,25 @@ class Blueprint {
         $this->columns[] = "$name DOUBLE($M, $D) $unsigned $null $unique";
     }
 
+    public function date($name, $canBeNull = true, $isUnique = false) {
+        $null = $canBeNull ? '' : 'NOT NULL';
+        $unique = $isUnique ? 'UNIQUE' : '';
+
+        $this->columns[] = "$name DATE $null $unique";
+    }
+
+    public function datetime($name, $canBeNull = true, $isUnique = false) {
+        $null = $canBeNull ? '' : 'NOT NULL';
+        $unique = $isUnique ? 'UNIQUE' : '';
+
+        $this->columns[] = "$name DATETIME $null $unique";
+    }
+
+    public function timestamps() {
+        $this->columns[] = "created_at DATETIME NOT NULL";
+        $this->columns[] = "updated_at DATETIME NOT NULL";
+    }
+
     public function toQuery() {
         $columnsSQL = implode(', ', $this->columns);
         return 'CREATE TABLE '.$this->tableName.' ('.($columnsSQL).')';
