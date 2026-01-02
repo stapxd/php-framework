@@ -69,6 +69,16 @@ class BuilderMySQL extends Builder {
         return $this;
     }
 
+    public function limit(int $limit) {
+        $this->sql .= " LIMIT " . intval($limit) . " ";
+        return $this;
+    }
+
+    public function orderBy(string $column, string $direction = 'ASC') {
+        $this->sql .= " ORDER BY " . $this->wrapName($column) . " " . strtoupper($direction) . " ";
+        return $this;
+    }
+
     public function update(array $data, array $conditions) {
         $sql = "UPDATE $this->tableName SET ";
 

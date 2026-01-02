@@ -16,6 +16,28 @@ class HomeController extends Controller {
 
         HomeModel::getAll();
 
+        // Define data and rules
+        $data = [
+            'name' => 'Artem',
+            'email' => 'artem@example.com',
+            'age' => 123
+        ];
+
+        $rules = [
+            'name' => 'required|min_length:3|max_length:10',
+            'email' => 'unique:users|regexp:/^[\w.-]+@[\w.-]+\.[A-Za-z]{2,6}$/',
+            'age' => 'min:18|max:100'
+        ];
+
+        // Validate data
+        $validated = Validator::validateData($data, $rules);
+
+        if(!$validated) {
+            echo "Validation failed. Errors stored in session.";
+        } else {
+            echo "Validation passed.";
+        }
+
         $user = Auth::currentUser();
 
         $data = [

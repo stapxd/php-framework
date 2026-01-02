@@ -1,7 +1,7 @@
 <?php
 
 use Vendor\Facades\DB;
-use Migration\Migration;
+use Migration\migration;
 
 require __DIR__.'/../autoload.php';
 
@@ -15,7 +15,7 @@ app()->register('schema', DB::getSchema());
 $migrationTableExists = DB::doesTableExist('migrations');
 
 if(!$migrationTableExists) {
-    $migrationTable = new Migration();
+    $migrationTable = new migration();
     $migrationTable->up();
     die;
 }

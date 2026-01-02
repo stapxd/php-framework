@@ -21,9 +21,10 @@ Router::middleware([TestMiddleware2::class])->group('users', function() {
     Router::get('/login', [HomeController::class, 'login']);
     Router::post('/login', [HomeController::class, 'loginPost']);
 
-    Router::get('/register', [HomeController::class, 'register'])->middleware([TestMiddleware3::class]);
-    Router::post('/register', [HomeController::class, 'registerPost']);
-
+    Router::group('reg', function() {
+        Router::get('/register', [HomeController::class, 'register'])->middleware([TestMiddleware3::class]);
+        Router::post('/register', [HomeController::class, 'registerPost']);
+    });
 
     Router::post('/logout', [HomeController::class, 'logoutPost']);
 });

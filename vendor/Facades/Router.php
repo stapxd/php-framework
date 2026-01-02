@@ -42,7 +42,7 @@ class Router extends Facade {
         return $router->execute($request);
     }
 
-    static function getFacadeAccessor(): string {
+    public static function getFacadeAccessor(): string {
         return 'router';
     }
 

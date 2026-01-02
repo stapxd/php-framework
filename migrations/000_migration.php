@@ -3,8 +3,9 @@
 namespace Migration;
 
 use Vendor\Facades\Schema;
+use Vendor\Foundation\MigrationBase;
 
-class Migration {
+class migration implements MigrationBase {
     public function up() {
         Schema::create('migrations', function($table) {
             $table->id();

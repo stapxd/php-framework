@@ -14,9 +14,9 @@ class Session {
         $_SESSION[$key] = $value;
     }
 
-    public static function get(string $key) {
+    public static function get(string $key, $default = null) {
         self::start();
-        return $_SESSION[$key] ?? null;
+        return $_SESSION[$key] ?? $default;
     }
 
     public static function destroy() {
@@ -46,5 +46,15 @@ class Session {
             }
             return null;
         }
+    }
+
+    public static function flush() {
+        self::start();
+        unset($_SESSION);
+    }
+
+    public static function flushFlash() {
+        self::start();
+        unset($_SESSION['flash']);
     }
 }

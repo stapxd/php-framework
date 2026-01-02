@@ -14,7 +14,7 @@ use Vendor\General\Session;
 <body>
 
     <?php
-    include_once 'Views/partials/errors.php';
+    include_once '../Views/partials/errors.php';
     ?>
 
 
@@ -23,7 +23,7 @@ use Vendor\General\Session;
         <input type="text" id="username" name="username" value="<?= $formData['username'] ?? '' ?>">
         <br>
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="<?= $formData['email'] ?? '' ?>">
+        <input type="text" id="email" name="email" value="<?= $formData['email'] ?? '' ?>">
         <br>
         <label for="age">Age:</label>
         <input type="text" id="age" name="age" value="<?= $formData['age'] ?? '' ?>">

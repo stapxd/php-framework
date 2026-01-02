@@ -30,6 +30,10 @@ class Request {
 
     public function getMethod() { return $this->method; }
 
+    public function has(string $param) : bool {
+        return isset($this->getParams[$param]) || isset($this->postParams[$param]);
+    }
+
     public function query(string $param, $default = null) {
         if(isset($this->getParams[$param])) return $this->getParams[$param];
         return $default;

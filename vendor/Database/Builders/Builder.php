@@ -19,4 +19,6 @@ class Builder {
     public function select(array $columns = ['*']) {}
     public function where(array $conditions) {}
     public function innerJoin(string $table, string $firstColumn, string $secondColumn) {}
+    public function limit(int $limit) {}
+    public function orderBy(string $column, string $direction = 'ASC') {}
 }
