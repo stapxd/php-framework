@@ -34,8 +34,10 @@ A lightweight PHP framework inspired by Laravel, designed for learning, experime
         <li><a href="#auth">Auth</a></li>
         <li>
           <a href="#database">Database</a>
-          <li><a href="#db-facade">DB Facade</a></li>
-          <li><a href="#query-builder">Query Builder</a></li>
+          <ul>
+            <li><a href="#db-facade">DB Facade</a></li>
+            <li><a href="#query-builder">Query Builder</a></li>
+          </ul>
         </li>
         <li><a href="#validation">Validation</a></li>
       </ul>
