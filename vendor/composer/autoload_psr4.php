@@ -6,6 +6,8 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Vendor\\General\\Validator\\Validators\\' => array($vendorDir . '/General/Validator/Validators'),
+    'Vendor\\General\\Validator\\' => array($vendorDir . '/General/Validator'),
     'Vendor\\General\\' => array($vendorDir . '/General'),
     'Vendor\\Foundation\\' => array($vendorDir . '/Foundation'),
     'Vendor\\Facades\\' => array($vendorDir . '/Facades'),
@@ -24,6 +26,7 @@ return array(
     'GrahamCampbell\\ResultType\\' => array($vendorDir . '/graham-campbell/result-type/src'),
     'Dotenv\\' => array($vendorDir . '/vlucas/phpdotenv/src'),
     'Controllers\\' => array($baseDir . '/Controllers'),
+    'App\\Services\\' => array($baseDir . '/app/Services'),
     'App\\Providers\\' => array($baseDir . '/app/Providers'),
     'App\\Middlewares\\' => array($baseDir . '/app/Middlewares'),
 );

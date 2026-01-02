@@ -16,7 +16,8 @@
             "Controllers\\": "Controllers/",
             "Models\\": "Models/",
             "App\\Providers\\": "app/Providers/",
-            "App\\Middlewares\\": "app/Middlewares/"
+            "App\\Middlewares\\": "app/Middlewares/",
+            "App\\Services\\": "app/Services/"
         },
         "files": [
             "vendor/General/helpers.php"

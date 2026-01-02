@@ -14,8 +14,10 @@ class ComposerStaticInitf89d44fd1798cb52b8ddee90cc28e5f7
     );
 
     public static $prefixLengthsPsr4 = array (
-        'V' => 
+        'V' =>
         array (
+            'Vendor\\General\\Validator\\Validators\\' => 36,
+            'Vendor\\General\\Validator\\' => 25,
             'Vendor\\General\\' => 15,
             'Vendor\\Foundation\\' => 18,
             'Vendor\\Facades\\' => 15,
@@ -26,118 +28,131 @@ class ComposerStaticInitf89d44fd1798cb52b8ddee90cc28e5f7
             'Vendor\\App\\Http\\' => 16,
             'Vendor\\App\\' => 11,
         ),
-        'S' => 
+        'S' =>
         array (
             'Symfony\\Polyfill\\Php80\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Ctype\\' => 23,
         ),
-        'P' => 
+        'P' =>
         array (
             'PhpOption\\' => 10,
         ),
-        'M' => 
+        'M' =>
         array (
             'Models\\' => 7,
             'Migration\\' => 10,
         ),
-        'G' => 
+        'G' =>
         array (
             'GrahamCampbell\\ResultType\\' => 26,
         ),
-        'D' => 
+        'D' =>
         array (
             'Dotenv\\' => 7,
         ),
-        'C' => 
+        'C' =>
         array (
             'Controllers\\' => 12,
         ),
-        'A' => 
+        'A' =>
         array (
+            'App\\Services\\' => 13,
             'App\\Providers\\' => 14,
             'App\\Middlewares\\' => 16,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Vendor\\General\\' => 
+        'Vendor\\General\\Validator\\Validators\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/General/Validator/Validators',
+        ),
+        'Vendor\\General\\Validator\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/General/Validator',
+        ),
+        'Vendor\\General\\' =>
         array (
             0 => __DIR__ . '/..' . '/General',
         ),
-        'Vendor\\Foundation\\' => 
+        'Vendor\\Foundation\\' =>
         array (
             0 => __DIR__ . '/..' . '/Foundation',
         ),
-        'Vendor\\Facades\\' => 
+        'Vendor\\Facades\\' =>
         array (
             0 => __DIR__ . '/..' . '/Facades',
         ),
-        'Vendor\\Database\\Schema\\' => 
+        'Vendor\\Database\\Schema\\' =>
         array (
             0 => __DIR__ . '/..' . '/Database/Schema',
         ),
-        'Vendor\\Database\\Builders\\' => 
+        'Vendor\\Database\\Builders\\' =>
         array (
             0 => __DIR__ . '/..' . '/Database/Builders',
         ),
-        'Vendor\\Database\\' => 
+        'Vendor\\Database\\' =>
         array (
             0 => __DIR__ . '/..' . '/Database',
         ),
-        'Vendor\\Auth\\' => 
+        'Vendor\\Auth\\' =>
         array (
             0 => __DIR__ . '/..' . '/Auth',
         ),
-        'Vendor\\App\\Http\\' => 
+        'Vendor\\App\\Http\\' =>
         array (
             0 => __DIR__ . '/..' . '/App/Http',
         ),
-        'Vendor\\App\\' => 
+        'Vendor\\App\\' =>
         array (
             0 => __DIR__ . '/..' . '/App',
         ),
-        'Symfony\\Polyfill\\Php80\\' => 
+        'Symfony\\Polyfill\\Php80\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
         ),
-        'Symfony\\Polyfill\\Mbstring\\' => 
+        'Symfony\\Polyfill\\Mbstring\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
         ),
-        'Symfony\\Polyfill\\Ctype\\' => 
+        'Symfony\\Polyfill\\Ctype\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
-        'PhpOption\\' => 
+        'PhpOption\\' =>
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
         ),
-        'Models\\' => 
+        'Models\\' =>
         array (
             0 => __DIR__ . '/../..' . '/Models',
         ),
-        'Migration\\' => 
+        'Migration\\' =>
         array (
             0 => __DIR__ . '/../..' . '/migrations',
         ),
-        'GrahamCampbell\\ResultType\\' => 
+        'GrahamCampbell\\ResultType\\' =>
         array (
             0 => __DIR__ . '/..' . '/graham-campbell/result-type/src',
         ),
-        'Dotenv\\' => 
+        'Dotenv\\' =>
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
         ),
-        'Controllers\\' => 
+        'Controllers\\' =>
         array (
             0 => __DIR__ . '/../..' . '/Controllers',
         ),
-        'App\\Providers\\' => 
+        'App\\Services\\' =>
+        array (
+            0 => __DIR__ . '/../..' . '/app/Services',
+        ),
+        'App\\Providers\\' =>
         array (
             0 => __DIR__ . '/../..' . '/app/Providers',
         ),
-        'App\\Middlewares\\' => 
+        'App\\Middlewares\\' =>
         array (
             0 => __DIR__ . '/../..' . '/app/Middlewares',
         ),
