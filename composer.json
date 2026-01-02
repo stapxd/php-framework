@@ -30,6 +30,6 @@
         "migrate": "php vendor/General/migrate.php",
         "rollback": "php vendor/General/rollback.php",
 
-        "init-auth": "php -r \"copy('vendor/Auth/User.php', 'migrations/UserMigration.php');\""
+        "init-auth": "php -r \"copy('vendor/Auth/User.php', 'migrations/xxx_user_migration.php');\""
     }
 }
