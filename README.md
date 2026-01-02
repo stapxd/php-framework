@@ -597,7 +597,7 @@ $rules = [
 ];
 
 // Validate data
-$validated = Validator::validate($data, $rules);
+$validated = Validator::validateData($data, $rules);
 ```
 
 ## License
