@@ -1,11 +1,10 @@
 <?php
 
-namespace Migration;
-
 use Vendor\Facades\Schema;
 use Vendor\Facades\DB;
+use Migration\Migration;
 
-class user_migration {
+return new class implements Migration {
     public function up() {
         Schema::create('users', function($table) {
             $table->id();
@@ -15,8 +14,10 @@ class user_migration {
     }
 
     public function down() {
-        DB::query('ALTER TABLE products DROP FOREIGN KEY products_created_by_fk');
+        if(DB::doesTableExist('products')) {
+            DB::query('ALTER TABLE products DROP FOREIGN KEY products_created_by_fk');
+        }
 
         Schema::dropIfExists('users');
     }
-}
+};

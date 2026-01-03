@@ -1,10 +1,9 @@
 <?php
 
-namespace Migration;
-
 use Vendor\Facades\Schema;
+use Migration\Migration;
 
-class product_migration {
+return new class implements Migration {
     public function up() {
         Schema::create('products', function($table) {
             $table->id();
@@ -25,4 +24,4 @@ class product_migration {
     public function down() {
         Schema::dropIfExists('products');
     }
-}
+};

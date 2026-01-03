@@ -1,7 +1,7 @@
 <?php
 
 use Vendor\Facades\DB;
-use Migration\migration;
+use Vendor\Facades\Schema;
 
 require __DIR__.'/../autoload.php';
 
@@ -12,11 +12,12 @@ $app = require __DIR__.'/../../app/app.php';
 
 app()->register('schema', DB::getSchema());
 
-$migrationTableExists = DB::doesTableExist('migrations');
-
-if(!$migrationTableExists) {
-    $migrationTable = new migration();
-    $migrationTable->up();
+if(!DB::doesTableExist('migrations')) {
+    Schema::create('migrations', function($table) {
+        $table->id();
+        $table->string('name');
+        $table->int('batch');
+    });
 }
 
 $result = DB::query("SELECT name FROM migrations");
@@ -27,30 +28,43 @@ $migrationsPath = __DIR__.'/../../migrations';
 
 $files = scandir($migrationsPath);
 
+$files = array_filter($files, fn ($f) =>
+    str_ends_with($f, '.php') && preg_match('/^\d+_/', $f)
+);
+
+sort($files);
+
+$files = array_values($files);
+
 $row = DB::query('SELECT MAX(batch) as max_batch FROM migrations')->fetch_assoc();
 
-$batch = $row['max_batch'] ?? 0;
-$batch++;
+$batch = (int) ($row['max_batch'] ?? 0) + 1;
+
+$ranAny = false;
 
 foreach ($files as $file) {
-    if($file == '000_migration.php') continue;
-    if(in_array($file, $executed)) continue;
+    if(in_array($file, $executed))
+        continue;
 
-    if(pathinfo($file, PATHINFO_EXTENSION) === 'php'){
-        require_once $migrationsPath.'/'.$file;
-
-        $filename = pathinfo($file, PATHINFO_FILENAME);
-        $className = 'Migration\\' . preg_replace('/^\d+_/', '', $filename);
-        
-        if(class_exists($className)) {
-            $migration = new $className();
-            if(method_exists($migration, 'up')){
-                $migration->up();
-
-                DB::query("INSERT INTO migrations (name, batch) VALUES('$file', $batch)");
-            }
-        }
+    $migration = require $migrationsPath.'/'.$file;
+    
+    if(!is_object($migration) || !method_exists($migration, 'up')) {
+        throw new Exception("Migration {$file} is invalid");
     }
+    
+    echo "Migrating: {$file}\n";
+    
+    $migration->up();
 
+    DB::table('migrations')->insert([
+        'name' => $file,
+        'batch' => $batch
+    ]);
+
+    $ranAny = true;
+}
+
+if(!$ranAny) {
+    echo "Nothing to migrate.\n";
 }
 

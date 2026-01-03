@@ -1,8 +1,8 @@
 <?php
 
-namespace Vendor\Foundation;
+namespace Migration;
 
-interface MigrationBase {
+interface Migration {
     public function up();
     public function down();
 }

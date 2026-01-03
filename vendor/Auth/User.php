@@ -1,10 +1,9 @@
 <?php
 
-namespace Vendor\Auth;
-
 use Vendor\Facades\Schema;
+use Migration\Migration;
 
-class User {
+return new class implements Migration {
     public function up() {
         Schema::create('users', function($table) {
             $table->id();
@@ -14,6 +13,8 @@ class User {
     }
 
     public function down() {
+        // Remove foreign key constraint if it exists
+        
         Schema::dropIfExists('users');
     }
-}
+};
